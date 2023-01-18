@@ -1,8 +1,13 @@
-# AR 101
+# Tic Tac Toe
 
-A project to learn about AR
+A Tic Tac Toe game with a minimax powered AI
+[Play]()
 
-## Task #1
-Render a sheet with an object name near that object
+## How to run
+-   1.Clone the repo (Green Code Btn)
+-   2.Install deps `pnpm install` || `yarn install` || `npm install`
+-   3.Run `pnpm dev` || `yarn dev` || `npm run dev`
 
-### Task #1 Notes
+### Road-map
+- [x] Make playable game
+- [ ] Make the AI
