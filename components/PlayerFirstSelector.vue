@@ -1,5 +1,15 @@
 <script setup>
-const { playerGoFirst } = useGameData();
+const { playerGoFirst, game, players } = useGameData();
+watch(
+    () => playerGoFirst,
+    (newV, oldV) => {
+        if (newV) {
+            game.value.currentlyPlaying = players.x;
+        } else {
+            game.value.currentlyPlaying = players.o;
+        }
+    }
+);
 </script>
 
 <template>

@@ -1,8 +1,4 @@
-<script setup>
-const props = defineProps({
-    prop1: {},
-});
-</script>
+<script setup></script>
 
 <template>
     <div class="grid mt-[80px] gap-[90px]">

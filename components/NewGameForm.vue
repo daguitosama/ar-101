@@ -1,6 +1,9 @@
 <script setup>
+const router = useRouter();
+
 function startGame() {
     console.log("starting game");
+    router.push("/game");
 }
 </script>
 

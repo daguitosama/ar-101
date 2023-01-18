@@ -1,0 +1,26 @@
+```js
+const moves = [
+    [
+        { coords: "0:0", player: null },
+        { coords: "0:1", player: null },
+        { coords: "0:2", player: null },
+    ],
+    [
+        { coords: "1:0", player: null },
+        { coords: "1:1", player: null },
+        { coords: "1:2", player: null },
+    ],
+    [
+        { coords: "2:0", player: null },
+        { coords: "2:1", player: null },
+        { coords: "2:2", player: null },
+    ],
+];
+
+const coords = '0:1'.split(':').map(n=>+n);
+
+console.log({
+    parsedCoords: coords,
+    move: moves[coords[0]][coords[1]]
+})
+```
