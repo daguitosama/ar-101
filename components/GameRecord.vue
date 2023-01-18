@@ -66,7 +66,7 @@ const lastPlayer = computed(
 );
 
 const router = useRouter();
-const { primeGameData, gameStates, opositePlayer, valueFromProxy } = useGameData();
+const { primeGameData, gameStates, opositePlayer, valueFromProxy, resetGameData } = useGameData();
 
 function startGameFromMove() {
     const gameData = {
@@ -78,6 +78,12 @@ function startGameFromMove() {
 
     primeGameData(gameData);
     router.push("/game");
+}
+
+function startGame() {
+    console.log("starting game");
+    resetGameData();
+    router.push("/");
 }
 </script>
 
@@ -132,6 +138,16 @@ function startGameFromMove() {
                     </button>
                 </div>
             </div>
+        </div>
+
+        <div
+            class="h-0 px-[30px] bg-white fixed w-full bottom-[80px] left-0 flex items-center justify-center"
+        >
+            <PrimaryBtn
+                @click="startGame"
+                text="New Game"
+                class="shadow-xl"
+            />
         </div>
     </div>
 </template>

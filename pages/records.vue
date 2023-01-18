@@ -3,7 +3,7 @@ const { gameRecords } = useGameData();
 </script>
 
 <template>
-    <div class="grid gap-[60px] max-w-[420px] mx-auto pb-[60px]">
+    <div class="grid gap-[60px] max-w-[420px] mx-auto pb-[160px]">
         <div class="mt-[60px]">
             <h1 class="text-3xl font-medium">Game Records</h1>
         </div>
