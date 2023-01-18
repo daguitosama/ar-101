@@ -59,10 +59,30 @@ const props = defineProps({
 });
 
 const { playerAvatar, players } = useGameData();
+
+const lastMoveVector = computed(() => [...props.record.lastMove.split(":").map((l) => +l)]);
+const lastPlayer = computed(
+    () => props.record.moves[lastMoveVector.value[0]][lastMoveVector.value[1]].player
+);
+
+const router = useRouter();
+const { primeGameData, gameStates, opositePlayer, valueFromProxy } = useGameData();
+
+function startGameFromMove() {
+    const gameData = {
+        currentlyPlaying: opositePlayer(lastPlayer.value),
+        moves: valueFromProxy(props.record.moves),
+        state: "playing",
+        lastMove: props.record.lastMove,
+    };
+
+    primeGameData(gameData);
+    router.push("/game");
+}
 </script>
 
 <template>
-    <div class="flex items-start gap-4">
+    <div class="flex items-start gap-4 h-full">
         <div class="text-3xl font-mono">
             <span>{{ recordId + 1 }}</span>
         </div>
@@ -74,9 +94,9 @@ const { playerAvatar, players } = useGameData();
             />
         </div>
 
-        <!-- avatar -->
-        <div>
-            <div class="text-3xl">
+        <!-- avatar & start from here btn-->
+        <div class="h-full">
+            <div class="flex flex-col justify-between h-full">
                 <!-- 
                     remember currently playing always is 
                     the player that play next
@@ -84,11 +104,32 @@ const { playerAvatar, players } = useGameData();
                     aka the other player
                     that's what might look inverted
                 -->
-                <div v-if="record.currentlyPlaying == players.o">
+                <div
+                    v-if="record.currentlyPlaying == players.o"
+                    class="text-3xl"
+                >
                     <span>{{ playerAvatar }}</span>
                 </div>
-                <div v-else>
+                <div
+                    v-else
+                    class="text-3xl"
+                >
                     <span>🤖</span>
+                </div>
+
+                <div
+                    v-if="
+                        record.state != gameStates.tie &&
+                        record.state != gameStates.winAI &&
+                        record.state != gameStates.winPlayer
+                    "
+                >
+                    <button
+                        @click="startGameFromMove"
+                        class="text-start text-xs px-[10px] py-[2px] rounded-xl border border-black"
+                    >
+                        Start a game from here
+                    </button>
                 </div>
             </div>
         </div>

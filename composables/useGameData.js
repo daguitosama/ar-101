@@ -117,17 +117,6 @@ export default function useGameData() {
             game.value.currentlyPlaying = players.x;
         }
 
-        // save the game state to records
-        // @ts-ignore
-        const staticMoves = getStaticMoves();
-        // console.log("gameData / updating game records", { staticMoves });
-        gameRecords.value.push({
-            currentlyPlaying: valueFromProxy(game.value.currentlyPlaying),
-            moves: staticMoves,
-            state: valueFromProxy(game.value.state),
-            lastMove: valueFromProxy(game.value.lastMove),
-        });
-
         // // //
         // game ending logic
         //
@@ -141,25 +130,35 @@ export default function useGameData() {
                 case players.x: {
                     // console.log("handle x win");
                     game.value.state = gameStates.winPlayer;
-                    return;
+                    break;
                 }
                 // won o
                 case players.o: {
                     // console.log("handle o win");
                     game.value.state = gameStates.winAI;
-                    return;
+                    break;
                 }
             }
         }
 
         // if not let's check if there is not more moves
         const { itIsFinal } = isFinalMove();
-        if (itIsFinal) {
+        if (!winner && itIsFinal) {
             // since the game finish and there is no winner
             // this must be a tie
             game.value.state = gameStates.tie;
-            return;
         }
+
+        // save the game state to records
+        // @ts-ignore
+        const staticMoves = getStaticMoves();
+        // console.log("gameData / updating game records", { staticMoves });
+        gameRecords.value.push({
+            currentlyPlaying: valueFromProxy(game.value.currentlyPlaying),
+            moves: staticMoves,
+            state: valueFromProxy(game.value.state),
+            lastMove: valueFromProxy(game.value.lastMove),
+        });
     }
 
     function isFinalMove() {
@@ -183,7 +182,7 @@ export default function useGameData() {
     }
 
     function resetGameData() {
-        console.log("gameData / resetting game data");
+        // console.log("gameData / resetting game data");
         // reset game records
         gameRecords.value = [];
         // put game as default state
@@ -210,6 +209,26 @@ export default function useGameData() {
         return pureV;
     }
 
+    function primeGameData(gameData) {
+        resetGameData();
+        // const gameData = {
+        //     currentlyPlaying: opositePlayer(lastPlayer.value),
+        //     moves: props.record.moves,
+        //     state: "playing",
+        //     lastMove: props.record.lastMove,
+        // };
+
+        // console.log("useGameData / priming game with, ", { gameData });
+        game.value.currentlyPlaying = gameData.currentlyPlaying;
+        game.value.state = gameData.state;
+        game.value.moves = gameData.moves;
+        game.value.lastMove = gameData.lastMove;
+    }
+
+    function opositePlayer(player = "x") {
+        return player == players.x ? players.o : players.x;
+    }
+
     return {
         playerAvatar,
         playerGoFirst,
@@ -219,5 +238,8 @@ export default function useGameData() {
         gameRecords,
         gameStates,
         resetGameData,
+        opositePlayer,
+        primeGameData,
+        valueFromProxy,
     };
 }

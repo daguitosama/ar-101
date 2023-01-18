@@ -52,8 +52,6 @@ const props = defineProps({
         default: "0:0",
     },
 });
-
-const move00 = computed(() => props.moves[0][0]);
 </script>
 
 <template>
@@ -69,9 +67,6 @@ const move00 = computed(() => props.moves[0][0]);
                         :key="jdx"
                         class="relative"
                     >
-                        <!-- <pre
-                            class="text-xs absolute top-0 left-0 bg-white overflow-visible"
-                        ><code>{{ idx }}:{{ jdx }}</code></pre> -->
                         <GameRecordBoardCell
                             :move="move"
                             :isLastMove="move.coords == lastMove"
