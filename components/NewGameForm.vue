@@ -5,17 +5,16 @@ function startGame() {
 </script>
 
 <template>
-    <div class="grid gap-[30px]">
+    <div class="grid gap-[60px] max-w-[420px] mx-auto">
         <PlayerAvatarSelector />
         <PlayerFirstSelector />
         <div
-            class="px-[30px] bg-white fixed w-full bottom-8 left-0 flex items-center justify-center"
+            class="px-[30px] bg-white fixed w-full bottom-[80px] left-0 flex items-center justify-center"
         >
             <PrimaryBtn
                 @click="startGame"
                 text="Play"
             />
-            <!-- <p>foo</p> -->
         </div>
     </div>
 </template>

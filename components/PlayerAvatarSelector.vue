@@ -21,7 +21,7 @@ const avatarOptions = [
 ];
 
 function updateSelection(newAvatar) {
-    console.log({ newAvatar });
+    // console.log({ newAvatar });
     if (typeof newAvatar != "string") {
         throw new Error("non valid new_avatar");
     }

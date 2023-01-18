@@ -15,9 +15,11 @@ const emit = defineEmits(["update_selection"]);
 
 <template>
     <div>
-        <h2 class="text-3xl font-medium">Select your avatar</h2>
+        <div class="flex items-center justify-center">
+            <h2 class="text-3xl font-medium">Select your avatar</h2>
+        </div>
 
-        <ul class="mt-[25px] flex gap-4">
+        <ul class="mt-[30px] flex gap-4">
             <li
                 v-for="(avatarOpt, idx) in avatarOptions"
                 :key="idx"
