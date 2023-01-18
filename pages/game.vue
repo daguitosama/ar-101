@@ -3,7 +3,7 @@ const { game, playerAvatar, updateGameMove, gameStates, gameRecords, resetGameDa
     useGameData();
 
 function onGameUpdate(data) {
-    console.log("game update", { data });
+    // console.log("game update", { data });
     updateGameMove({ cellID: data.cellID });
 }
 

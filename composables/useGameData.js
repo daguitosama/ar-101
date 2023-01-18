@@ -100,7 +100,7 @@ export default function useGameData() {
     const gameRecords = useState(() => []);
 
     function updateGameMove({ cellID = "0:0" }) {
-        console.log("updateGameMove", { cellID });
+        // console.log("updateGameMove", { cellID });
 
         // // //
         // game update logic

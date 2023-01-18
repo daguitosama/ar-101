@@ -13,7 +13,7 @@ const props = defineProps({
 const emit = defineEmits(["game_update"]);
 
 function onCellHit(data) {
-    console.log("cell hit", { data });
+    // console.log("cell hit", { data });
     emit("game_update", { cellID: data.cellID, player: props.game.currentlyPlaying });
 }
 </script>
