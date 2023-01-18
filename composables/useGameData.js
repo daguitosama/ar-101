@@ -118,7 +118,11 @@ export default function useGameData() {
 
         // save the game state to records
         // @ts-ignore
-        gameRecords.value.push(game.value);
+        gameRecords.value.push({
+            currentlyPlaying: (() => game.value.currentlyPlaying)(),
+            moves: (() => game.value.moves)(),
+            state: (() => game.value.state)(),
+        });
 
         // // //
         // game ending logic
@@ -174,5 +178,23 @@ export default function useGameData() {
         return { itIsFinal };
     }
 
-    return { playerAvatar, playerGoFirst, game, updateGameMove, players, gameRecords, gameStates };
+    function resetGameData() {
+        // reset game records
+        gameRecords.value = [];
+        // put game as default state
+        game.value.currentlyPlaying = playerGoFirst.value ? players.x : players.o;
+        game.value.moves = getNewGameMoves();
+        game.value.state = gameStates.playing;
+    }
+
+    return {
+        playerAvatar,
+        playerGoFirst,
+        game,
+        updateGameMove,
+        players,
+        gameRecords,
+        gameStates,
+        resetGameData,
+    };
 }

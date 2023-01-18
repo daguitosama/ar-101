@@ -5,5 +5,5 @@ const props = defineProps({
 </script>
 
 <template>
-    <div></div>
+    <div>Records</div>
 </template>
