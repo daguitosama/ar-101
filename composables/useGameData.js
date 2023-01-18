@@ -49,7 +49,7 @@ function checkForWin(moves = getNewGameMoves()) {
             moves[i][0].player === moves[i][1].player &&
             moves[i][1].player === moves[i][2].player
         ) {
-            console.log("winner detected in row", moves[i][0].player);
+            // console.log("winner detected in row", moves[i][0].player);
             return moves[i][0].player;
         }
     }
@@ -60,7 +60,7 @@ function checkForWin(moves = getNewGameMoves()) {
             moves[0][i].player === moves[1][i].player &&
             moves[1][i].player === moves[2][i].player
         ) {
-            console.log("winner detected in column", moves[0][i].player);
+            // console.log("winner detected in column", moves[0][i].player);
             return moves[0][i].player;
         }
     }
@@ -70,7 +70,7 @@ function checkForWin(moves = getNewGameMoves()) {
         moves[0][0].player === moves[1][1].player &&
         moves[1][1].player === moves[2][2].player
     ) {
-        console.log("winner detected in diagonal", moves[0][0].player);
+        // console.log("winner detected in diagonal", moves[0][0].player);
         return moves[0][0].player;
     }
     if (
@@ -78,7 +78,7 @@ function checkForWin(moves = getNewGameMoves()) {
         moves[0][2].player === moves[1][1].player &&
         moves[1][1].player === moves[2][0].player
     ) {
-        console.log("winner detected in diagonal", moves[0][2].player);
+        // console.log("winner detected in diagonal", moves[0][2].player);
         return moves[0][2].player;
     }
     // If no win is found, return null
@@ -95,13 +95,14 @@ export default function useGameData() {
         currentlyPlaying: "x" || "o",
         moves: getNewGameMoves(),
         state: gameStates.playing,
+        lastMove: null,
     }));
 
     const gameRecords = useState(() => []);
 
     function updateGameMove({ cellID = "0:0" }) {
         // console.log("updateGameMove", { cellID });
-
+        game.value.lastMove = cellID;
         // // //
         // game update logic
         //
@@ -118,10 +119,13 @@ export default function useGameData() {
 
         // save the game state to records
         // @ts-ignore
+        const staticMoves = getStaticMoves();
+        // console.log("gameData / updating game records", { staticMoves });
         gameRecords.value.push({
-            currentlyPlaying: (() => game.value.currentlyPlaying)(),
-            moves: (() => game.value.moves)(),
-            state: (() => game.value.state)(),
+            currentlyPlaying: valueFromProxy(game.value.currentlyPlaying),
+            moves: staticMoves,
+            state: valueFromProxy(game.value.state),
+            lastMove: valueFromProxy(game.value.lastMove),
         });
 
         // // //
@@ -179,12 +183,31 @@ export default function useGameData() {
     }
 
     function resetGameData() {
+        console.log("gameData / resetting game data");
         // reset game records
         gameRecords.value = [];
         // put game as default state
         game.value.currentlyPlaying = playerGoFirst.value ? players.x : players.o;
         game.value.moves = getNewGameMoves();
-        game.value.state = gameStates.playing;
+        game.value.state = (() => gameStates.playing)();
+        game.value.lastMove = null;
+    }
+
+    function getStaticMoves() {
+        const staticMoves = [];
+        game.value.moves.forEach((m) => {
+            // how to extract pure values from Proxies
+            // https://stackoverflow.com/questions/47216091/retrieve-original-target-object-from-existing-proxy-instance#60875493
+            const pureM = JSON.parse(JSON.stringify(m));
+            // console.log({ pureM });
+            return staticMoves.push(pureM);
+        });
+        return staticMoves;
+    }
+
+    function valueFromProxy(proxy = {}) {
+        const pureV = JSON.parse(JSON.stringify(proxy));
+        return pureV;
     }
 
     return {

@@ -3,18 +3,21 @@ const { gameRecords } = useGameData();
 </script>
 
 <template>
-    <div class="grid gap-[60px] max-w-[420px] mx-auto">
-        <div class="flex items-center justify-center mt-[60px]">
+    <div class="grid gap-[60px] max-w-[420px] mx-auto pb-[60px]">
+        <div class="mt-[60px]">
             <h1 class="text-3xl font-medium">Game Records</h1>
         </div>
 
         <div>
-            <ul>
+            <ul class="grid gap-6">
                 <li
                     v-for="(record, idx) in gameRecords"
                     :key="idx"
                 >
-                    <pre class="border border-black p-2"><code>{{ idx }} : {{ record }}</code></pre>
+                    <GameRecord
+                        :record="record"
+                        :recordId="idx"
+                    />
                 </li>
             </ul>
         </div>

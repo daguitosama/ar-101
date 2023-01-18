@@ -11,6 +11,10 @@ const props = defineProps({
     isFilled: {
         type: Boolean,
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(["cell_hit"]);
@@ -20,6 +24,7 @@ const emit = defineEmits(["cell_hit"]);
     <button
         class="border border-black w-[100px] h-[100px]"
         @click="emit('cell_hit', { cellID, player })"
+        :disabled="disabled || player"
     >
         <span class="font-medium text-3xl">{{ player }}</span>
     </button>
