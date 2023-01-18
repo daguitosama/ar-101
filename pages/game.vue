@@ -63,7 +63,7 @@ function startGame() {
 
             <!-- new game -->
             <div
-                class="px-[30px] bg-white fixed w-full bottom-[80px] left-0 flex items-center justify-center"
+                class="px-[30px] bg-white absolute w-full bottom-[80px] left-0 flex items-center justify-center"
             >
                 <PrimaryBtn
                     @click="startGame"
