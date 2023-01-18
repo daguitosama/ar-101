@@ -1,18 +1,20 @@
 <script setup>
 const { playerGoFirst, game, players } = useGameData();
 watch(
-    () => playerGoFirst,
+    () => playerGoFirst.value,
     (newV, oldV) => {
         if (newV) {
+            // console.log("playerGoFirst / currently playing x");
             game.value.currentlyPlaying = players.x;
         } else {
+            // console.log("playerGoFirst / currently playing o");
             game.value.currentlyPlaying = players.o;
         }
     }
 );
 
 function toggleSelection() {
-    console.log("playerGoFirst / toggling selection");
+    // console.log("playerGoFirst / toggling selection");
     playerGoFirst.value = !playerGoFirst.value;
 }
 </script>
