@@ -30,12 +30,12 @@ const emit = defineEmits(["update_selection"]);
                     class="flex flex-col gap-4 items-center justify-center ring-black p-[10px] rounded-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black focus-visible:ring-offset-4"
                     :class="{
                         'ring-4 ': currentSelection == avatarOpt.avatar,
-                        'ring-2': currentSelection != avatarOpt.avatar,
+                        'ring-2 ': currentSelection != avatarOpt.avatar,
                     }"
                 >
                     <span class="text-3xl">{{ avatarOpt.avatar }}</span>
                     <div
-                        class="w-[16px] h-[16px] rounded-full border-2 border-black bg-white transition-all duration-300"
+                        class="w-[16px] h-[16px] rounded-full border-2 border-black transition-all duration-300"
                         :class="{
                             'bg-black ': currentSelection == avatarOpt.avatar,
                         }"
