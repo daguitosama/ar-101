@@ -9,15 +9,31 @@ const { makeAMove: AIMakeAMove } = useAi();
 // will be triggered just
 // by the action of the human player
 // so can be used to trigger the AI move in response
-function onGameUpdate(data) {
+async function onGameUpdate(data) {
     // console.log("game update", { data });
     updateGameMove({ cellID: data.cellID });
     // ai move at the end
     // if the board is not empty yet
-    if (!isFinalMove(game.value.moves)) {
-        AIMakeAMove(1);
-    }
+    // wait a little bit
+    setTimeout(() => {
+        if (!isFinalMove(game.value.moves)) {
+            AIMakeAMove(1);
+        }
+    }, 1 * 1000);
 }
+
+// aditionally hanldle the case when the
+// the game starts and is the turn of the ai
+
+onMounted(() => {
+    if (game.value.currentlyPlaying == players.o) {
+        setTimeout(() => {
+            if (!isFinalMove(game.value.moves)) {
+                AIMakeAMove(1);
+            }
+        }, 1 * 1000);
+    }
+});
 
 // disable the board when ai playing
 const isAIPlaying = computed(() => game.value.currentlyPlaying == players.o);
