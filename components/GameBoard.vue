@@ -8,6 +8,10 @@ const props = defineProps({
             state: "playing" || "tie" || "win Player" || "win AI",
         }),
     },
+    disable_board: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(["game_update"]);
@@ -34,6 +38,7 @@ function onCellHit(data) {
                             :cellID="move.coords"
                             :player="move.player"
                             @cell_hit="onCellHit"
+                            :disabled="disable_board"
                         />
                     </li>
                 </ul>

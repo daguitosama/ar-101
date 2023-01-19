@@ -1,12 +1,27 @@
 <script setup>
-const { game, playerAvatar, updateGameMove, gameStates, gameRecords, resetGameData } =
-    useGameData();
+import { isFinalMove } from "~~/lib";
 
+const { game, playerAvatar, updateGameMove, gameStates, gameRecords, resetGameData, players } =
+    useGameData();
+const { makeAMove: AIMakeAMove } = useAi();
+
+// now there is an AI this function
+// will be triggered just
+// by the action of the human player
+// so can be used to trigger the AI move in response
 function onGameUpdate(data) {
     // console.log("game update", { data });
     updateGameMove({ cellID: data.cellID });
+    // ai move at the end
+    // if the board is not empty yet
+    if (!isFinalMove(game.value.moves)) {
+        AIMakeAMove(1);
+    }
 }
 
+// disable the board when ai playing
+const isAIPlaying = computed(() => game.value.currentlyPlaying == players.o);
+// make the move whenever the AI is turn
 const router = useRouter();
 
 function goToGameRecords() {
@@ -29,6 +44,7 @@ function startGame() {
                 <GameBoard
                     :game="game"
                     @game_update="onGameUpdate"
+                    :disable_board="isAIPlaying"
                     class="mt-[60px]"
                 />
             </div>
